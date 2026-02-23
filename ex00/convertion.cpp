@@ -1,6 +1,6 @@
 #include "ScalarConverter.hpp"
 
-void	print_special(const std::string& literal)
+void	print_special(std::string literal)
 {
 	if (literal == "nan" || literal == "nanf")
 	{
@@ -25,11 +25,11 @@ void	print_special(const std::string& literal)
 	}
 }
 
-void	convert_char(const std::string& literal, size_t& len)
+void	convert_char(std::string literal)
 {
 	char	c = 0;
 
-	if (len == 1)
+	if (literal.length() == 1)
 		c = literal[0];
 	else
 		c = literal[1];
@@ -45,9 +45,9 @@ void	convert_char(const std::string& literal, size_t& len)
 		std::cout << "Non displayable\n";
 }
 
-void	convert_int(const std::string& literal)
+void	convert_int(std::string literal)
 {
-	long double		number = std::strtold(literal.c_str(), NULL);
+	double		number = std::strtod(literal.c_str(), NULL);
 
 	std::cout << "char: ";
 	if (number < 0 || number > 127)
@@ -59,26 +59,18 @@ void	convert_int(const std::string& literal)
 		else
 			std::cout << "Non displayable\n";
 	}
-	std::cout << "int: ";
+	std::cout << "int: " << std::fixed << std::setprecision(1);
 	if (number < MIN_INT || number > MAX_INT)
 		std::cout << "impossible\n";
 	else
 		std::cout	<< static_cast<int>(number) << "\n";
-	std::cout << "float: " << std::fixed << std::setprecision(1);
-	if (number < MIN_FLOAT || number > MAX_FLOAT)
-		std::cout << "impossible\n";
-	else
-		std::cout << number << "f\n";
-	std::cout << "double: ";
-	if (number < MIN_DOUBLE || number > MAX_DOUBLE)
-		std::cout << "impossible\n";
-	else
-		std::cout << number << "\n";
+	std::cout << "float: " << static_cast<float>(number) << "f\n";
+	std::cout << "double: " << static_cast<double>(number) << "\n";
 }
 
-void	convert_float(const std::string& literal)
+void	convert_float(std::string literal)
 {
-	long double		f = std::strtold(literal.c_str(), NULL);
+	double		f = std::strtod(literal.c_str(), NULL);
 
     std::cout << "char: ";
 	if (f < 0 || f > 127)
@@ -100,16 +92,12 @@ void	convert_float(const std::string& literal)
 		std::cout << "impossible\n";
 	else
 		std::cout << f << "f\n";
-	std::cout << "double: ";
-	if (f < MIN_DOUBLE || f > MAX_DOUBLE)
-		std::cout << "impossible\n";
-	else
-		std::cout << f << "\n";
+	std::cout << "double: " << static_cast<double>(f) << "\n";
 }
 
-void	convert_double(const std::string& literal)
+void	convert_double(std::string literal)
 {
-	long double		d = std::strtold(literal.c_str(), NULL);
+	double		d = std::strtod(literal.c_str(), NULL);
 
 	std::cout << "char: ";
 	if (d < 0 || d > 127)
@@ -117,7 +105,7 @@ void	convert_double(const std::string& literal)
 	else
 	{
 		if (isprint(d))
-			std::cout << "'" << static_cast<char>(d) << "\n";
+			std::cout << "'" << static_cast<char>(d) << "'\n";
 		else 
 			std::cout << "Non displayable\n";
 	}
@@ -130,7 +118,7 @@ void	convert_double(const std::string& literal)
 	if (d < MIN_FLOAT || d > MAX_FLOAT)
 		std::cout << "impossible\n";
 	else
-		std::cout << static_cast<float>(d) << "f\n";
+		std::cout << static_cast<float>(d) << 'f' << "\n";
 	std::cout << "double: ";
 	if (d < MIN_DOUBLE || d > MAX_DOUBLE)
 		std::cout << "impossible\n";

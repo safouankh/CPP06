@@ -1,9 +1,19 @@
 #include "ScalarConverter.hpp"
 
+ScalarConverter::ScalarConverter(ScalarConverter const &other)
+{
+    *this = other;
+}
+
+ScalarConverter	&ScalarConverter::operator=(ScalarConverter const &rhs)
+{
+	(void)rhs;
+	return *this;
+}
+
 void    ScalarConverter::convert(std::string literal)
 {
-    size_t  len = literal.length();
-    types   type = detect_type(literal, len);
+    types   type = detect_type(literal);
     switch(type)
     {
         case NOTHING:
@@ -13,7 +23,7 @@ void    ScalarConverter::convert(std::string literal)
             print_special(literal);
             break;
         case CHAR:
-            convert_char(literal, len);
+            convert_char(literal);
             break;
         case INT:
             convert_int(literal);
